@@ -21,9 +21,17 @@ class LinkedList {
     	return node;
     }
 
-    head() {}
+    head() {
+    	if(this._head){
+    		return this._head.data;
+    	};
+    }
 
-    tail() {}
+    tail() {
+    	if(this._tail){
+    		return this._tail.data;
+    	};
+    }
 
     at(index) {}
 

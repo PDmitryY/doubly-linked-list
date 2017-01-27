@@ -8,17 +8,17 @@ class LinkedList {
     }
 
     append(data) {
-    	if(this._head == null){
-    		this._head = new Node(data);
-    		this._tail = this._head;
-    		this.length++;
-    		return
-    	}
     	let node = new Node(data);
-    	this._tail = node;
-    	node.prev = this._head;
+    	if(this._head == null){
+    		this._head = node;
+    		this._tail = this._head;
+    	} else{
+    		this._tail.next = node;
+    		node.prev = this._tail;
+    		this._tail = node;
+    	}
     	this.length++;
-
+    	return node;
     }
 
     head() {}

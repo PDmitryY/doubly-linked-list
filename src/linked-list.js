@@ -24,18 +24,43 @@ class LinkedList {
     head() {
     	if(this._head){
     		return this._head.data;
-    	};
+    	}else{
+    		return null;
+    	}
     }
 
     tail() {
     	if(this._tail){
     		return this._tail.data;
-    	};
+    	}else{
+    		return null;
+    	}
     }
 
-    at(index) {}
+    at(index) {
+    	const foundNode = this._find(index);
+    	return foundNode ? foundNode.data : null;
+    }
 
-    insertAt(index, data) {}
+    insertAt(index, data) {
+    	let node = new Node(data);
+    	let currentNode = this._find(index);
+    	if(!currentNode) {
+    		throw new Error("Error");
+    		return;
+    	};
+    	let prevNode = currentNode.prev;
+    	if(currentNode){
+    		currentNode.prev = node;
+    		node.next = currentNode;
+    		node.prev = prevNode;
+
+    		if(prevNode) prevNode.next = node;
+    		if(index == 0){
+    			this._head = node;
+    		};
+    	}
+    }
 
     isEmpty() {
     	if(this.length == 0){
@@ -50,16 +75,50 @@ class LinkedList {
     	}
     	else{
     		this.length = 0;
-    		this._head.data = null;
-    		this._tail.data = null;
+    		this._head = null;
+    		this._tail = null;
     	}
     }
 
     deleteAt(index) {}
 
-    reverse() {}
+    reverse() {
+    	let temp = null;
+    	let currentNode = this._head;
+    	while(currentNode != null){
+    		temp = currentNode.prev;
+    		currentNode.prev = currentNode.next;
+    		currentNode.next = temp;
+    		currentNode = currentNode.prev;
+    	}
+    	if(temp != null){
+    		this._tail = this._head;
+    		this._head = temp.prev;
+    	}
+    }
 
     indexOf(data) {}
+
+    _find(index){
+    	if(this.isEmpty() || (this.length < index)){
+    		return;
+    	};
+    	let node = this._head;
+    	let counter = 0;
+    	while(counter != index){
+    		node = node.next;
+    		counter++
+    	}
+    	return node;
+    }
+    _printAll() {
+	   let n = this._head;
+	  
+	   while(n) {
+	    console.log(n.data);
+	    n = n.next;
+	   }
+	}
 }
 
 module.exports = LinkedList;

@@ -18,7 +18,7 @@ class LinkedList {
     		this._tail = node;
     	}
     	this.length++;
-    	return node;
+    	return this;
     }
 
     head() {
@@ -46,8 +46,7 @@ class LinkedList {
     	let node = new Node(data);
     	let currentNode = this._find(index);
     	if(!currentNode) {
-    		throw new Error("Error");
-    		return;
+    		return this;
     	};
     	let prevNode = currentNode.prev;
     	if(currentNode){
@@ -60,6 +59,7 @@ class LinkedList {
     			this._head = node;
     		};
     	}
+    	return this;
     }
 
     isEmpty() {
@@ -78,9 +78,22 @@ class LinkedList {
     		this._head = null;
     		this._tail = null;
     	}
+    	return this;
     }
 
-    deleteAt(index) {}
+    deleteAt(index) {
+    	let currentNode = this._find(index);
+    	if(currentNode){
+    		if(currentNode.prev) currentNode.prev.next = currentNode.next;
+    		if(currentNode.next) currentNode.next.prev = currentNode.prev;
+    		if(currentNode === this._tail){
+    			this._head = currentNode.next;
+    			this._tail = currentNode.prev;
+    		};
+    	};
+
+    	return this;
+    }
 
     reverse() {
     	let temp = null;
@@ -95,9 +108,22 @@ class LinkedList {
     		this._tail = this._head;
     		this._head = temp.prev;
     	}
+    	return this;
     }
 
-    indexOf(data) {}
+    indexOf(data) {
+    	let currentNode = this._head;
+    	let counter = 0;
+    	if(currentNode){
+    		while(currentNode && currentNode.data != data){
+    		currentNode = currentNode.next;
+    		counter ++;
+    		}
+    	} 
+
+    	if(!currentNode) return -1;
+    	return counter;
+    }
 
     _find(index){
     	if(this.isEmpty() || (this.length < index)){

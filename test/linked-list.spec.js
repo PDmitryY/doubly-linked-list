@@ -27,8 +27,6 @@ describe('LinkedList', () => {
 
             list.append(123);
             list.append(413);
-            console.log("1)", list.length);
-            console.log("2)", list.tail())
             expect(list.length).to.equal(2);
             expect(list.tail()).to.equal(413);
             expect(list.head()).to.equal(123);
